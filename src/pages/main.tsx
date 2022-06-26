@@ -1,13 +1,24 @@
 import { FormEvent, useState } from "react";
 
-const Main = () => {
+export const Main = () => {
   const [value, setValue] = useState("");
-  const [todo, setTodo] = useState("");
+  const [todo, setTodo] = useState<Array<string>>([]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(value);
+
+    if (value) {
+      setTodo([...todo, value])
+    }
+
+    setValue('')
   };
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const taskInput = e.target.value;
+
+    setValue(taskInput)
+  }
 
   return (
     <div>
@@ -16,12 +27,15 @@ const Main = () => {
         <input
           type="text"
           value={value}
-          onChange={e => setValue(e.target.value)}
+          onChange={handleChangeInput}
         />
         <button type="submit">Adicionar</button>
       </form>
+      <ul>
+        {todo.map(task => (
+          <li key={task}>{task}</li>
+        ))}
+      </ul>
     </div>
   );
 };
-
-export default Main;
