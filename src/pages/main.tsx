@@ -1,5 +1,7 @@
 import { FormEvent, useState } from "react";
 
+import { Title, Container, Input, Box, Task } from "./style";
+
 export const Main = () => {
   const [value, setValue] = useState("");
   const [todo, setTodo] = useState<Array<string>>([]);
@@ -8,34 +10,36 @@ export const Main = () => {
     e.preventDefault();
 
     if (value) {
-      setTodo([...todo, value])
+      setTodo([...todo, value]);
     }
 
-    setValue('')
+    setValue("");
   };
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const taskInput = e.target.value;
 
-    setValue(taskInput)
-  }
+    setValue(taskInput);
+  };
 
   return (
-    <div>
-      <h1>Todo list</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={value}
-          onChange={handleChangeInput}
-        />
-        <button type="submit">Adicionar</button>
-      </form>
-      <ul>
-        {todo.map(task => (
-          <li key={task}>{task}</li>
-        ))}
-      </ul>
-    </div>
+    <Container>
+      <Title>Todo List</Title>
+      <Box>
+        <form onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            placeholder="Insira a tarefa"
+            value={value}
+            onChange={handleChangeInput}
+          />
+          <ul>
+            {todo.map((task) => (
+              <Task key={task}>{task}</Task>
+            ))}
+          </ul>
+        </form>
+      </Box>
+    </Container>
   );
 };
