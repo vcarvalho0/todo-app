@@ -1,16 +1,22 @@
-import { FormEvent, useState } from "react";
+import React, { FormEvent, useState } from "react";
+import { Tasks } from "../components/tasks";
 
-import { Title, Container, Input, Box, Task } from "./style";
+import { Title, Container, Input, Box } from "./style";
+
+export type TodoType = {
+  todoName: string;
+};
 
 export const Main = () => {
   const [value, setValue] = useState("");
-  const [todo, setTodo] = useState<Array<string>>([]);
+  const [todo, setTodo] = useState<TodoType[]>([]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     if (value) {
-      setTodo([...todo, value]);
+      const newTodo = { todoName: value };
+      setTodo([...todo, newTodo]);
     }
 
     setValue("");
@@ -20,6 +26,14 @@ export const Main = () => {
     const taskInput = e.target.value;
 
     setValue(taskInput);
+  };
+
+  const deleteTask = (taskToDelete: string) => {
+    setTodo(
+      todo.filter((task) => {
+        return task.todoName != taskToDelete;
+      })
+    );
   };
 
   return (
@@ -33,12 +47,12 @@ export const Main = () => {
             value={value}
             onChange={handleChangeInput}
           />
-          <ul>
-            {todo.map((task) => (
-              <Task key={task}>{task}</Task>
-            ))}
-          </ul>
         </form>
+        <div>
+          {todo.map((task, index) => {
+            return <Tasks task={task} key={index} deleteTask={deleteTask} />;
+          })}
+        </div>
       </Box>
     </Container>
   );

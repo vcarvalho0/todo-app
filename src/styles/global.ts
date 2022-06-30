@@ -12,7 +12,7 @@ export default createGlobalStyle`
   }
 
   body {
-    background-color: #FAFAFA;
+    background-color: #2D3047;
     font-family: sans-serif;
   }
 
