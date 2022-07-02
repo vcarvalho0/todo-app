@@ -1,28 +1,32 @@
-import React, { FormEvent, useState } from "react";
+import React, { useState } from "react";
 import { Tasks } from "../components/tasks";
 
 import { Title, Container, Input, Box } from "./style";
 
+type Input = React.ChangeEvent<HTMLInputElement>
+type Form = React.FormEvent
+
 export type TodoType = {
   todoName: string;
+  complete: boolean
 };
 
 export const Main = () => {
   const [value, setValue] = useState("");
   const [todo, setTodo] = useState<TodoType[]>([]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: Form) => {
     e.preventDefault();
 
     if (value) {
-      const newTodo = { todoName: value };
+      const newTodo = { todoName: value, complete: false };
       setTodo([...todo, newTodo]);
     }
 
     setValue("");
   };
 
-  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = (e: Input) => {
     const taskInput = e.target.value;
 
     setValue(taskInput);
@@ -35,6 +39,10 @@ export const Main = () => {
       })
     );
   };
+
+  const completeTask = () => {
+    console.log('')
+  }
 
   return (
     <Container>
@@ -49,8 +57,8 @@ export const Main = () => {
           />
         </form>
         <div>
-          {todo.map((task, index) => {
-            return <Tasks task={task} key={index} deleteTask={deleteTask} />;
+          {todo.map((task: TodoType, index: number) => {
+            return <Tasks task={task} key={index} deleteTask={deleteTask} completeTask={completeTask} />;
           })}
         </div>
       </Box>
