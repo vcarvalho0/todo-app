@@ -3,12 +3,12 @@ import { Tasks } from "../components/tasks";
 
 import { Title, Container, Input, Box } from "./style";
 
-type Input = React.ChangeEvent<HTMLInputElement>
-type Form = React.FormEvent
+type Input = React.ChangeEvent<HTMLInputElement>;
+type Form = React.FormEvent;
 
 export type TodoType = {
   todoName: string;
-  complete: boolean
+  complete: boolean;
 };
 
 export const Main = () => {
@@ -40,9 +40,16 @@ export const Main = () => {
     );
   };
 
-  const completeTask = () => {
-    console.log('')
-  }
+  const completeTask = (taskToComplete: string) => {
+    setTodo(
+      todo.map((task) => {
+        if (task.todoName === taskToComplete) {
+          task.complete = !task.complete;
+        }
+        return task;
+      })
+    );
+  };
 
   return (
     <Container>
@@ -58,7 +65,14 @@ export const Main = () => {
         </form>
         <div>
           {todo.map((task: TodoType, index: number) => {
-            return <Tasks task={task} key={index} deleteTask={deleteTask} completeTask={completeTask} />;
+            return (
+              <Tasks
+                task={task}
+                key={index}
+                deleteTask={deleteTask}
+                completeTask={completeTask}
+              />
+            );
           })}
         </div>
       </Box>
