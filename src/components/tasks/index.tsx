@@ -12,10 +12,10 @@ export const Tasks = ({ task, deleteTask, completeTask }: TaskType) => {
   return (
     <Container>
       <Task style={{ textDecoration: task.complete ? "line-through" : "" }}>
-        {task.todoName}
+        {task.name}
       </Task>
-      <Check onClick={() => completeTask(task.todoName)} />
-      <Trash onClick={() => deleteTask(task.todoName)} />
+      <Check onClick={() => completeTask(task.name)} />
+      <Trash onClick={() => deleteTask(task.name)} />
     </Container>
   );
 };
