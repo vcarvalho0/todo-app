@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Tasks } from "../components/tasks";
 
-import { Title, Container, Input, Box } from "./style";
+import { Title, Container, Input, BoxInput, BoxList } from "./style";
 
-type Input = React.ChangeEvent<HTMLInputElement>;
+type InputType = React.ChangeEvent<HTMLInputElement>;
 type Form = React.FormEvent;
 
 export type TodoType = {
@@ -13,7 +13,21 @@ export type TodoType = {
 
 export const Main = () => {
   const [value, setValue] = useState("");
-  const [todo, setTodo] = useState<TodoType[]>([]);
+  const [todo, setTodo] = useState<TodoType[]>(() => {
+    const storegedTask = localStorage.getItem('task')
+
+    if (!storegedTask) {
+      return null
+    }
+
+    const task = JSON.parse(storegedTask)
+
+    return task ?? []
+  })
+
+  useEffect(() => {
+    localStorage.setItem('task', JSON.stringify(todo))
+  }, [todo])
 
   const handleSubmit = (e: Form) => {
     e.preventDefault();
@@ -26,7 +40,7 @@ export const Main = () => {
     setValue("");
   };
 
-  const changeInput = (e: Input) => {
+  const changeInput = (e: InputType) => {
     const taskInput = e.target.value;
 
     setValue(taskInput);
@@ -53,9 +67,9 @@ export const Main = () => {
 
   return (
     <Container>
-      <Title>Todo List</Title>
-      <Box>
-        <form onSubmit={handleSubmit}>
+      <Title>Tasks</Title>
+        <BoxInput>
+          <form onSubmit={handleSubmit}>
           <Input
             type="text"
             placeholder="Insira a tarefa"
@@ -63,19 +77,18 @@ export const Main = () => {
             onChange={changeInput}
           />
         </form>
-        <div>
-          {todo.map((task: TodoType, index: number) => {
-            return (
-              <Tasks
-                task={task}
-                key={index}
-                deleteTask={deleteTask}
-                completeTask={completeTask}
-              />
-            );
-          })}
-        </div>
-      </Box>
+      </BoxInput>
+      {todo.map((task: TodoType, index) => {
+        return (
+          <BoxList key={index}>
+            <Tasks
+              task={task}
+              deleteTask={deleteTask}
+              completeTask={completeTask}
+            />
+          </BoxList>
+        );
+      })}
     </Container>
   );
 };

@@ -5,6 +5,7 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
   }
 
   *:focus {
@@ -12,7 +13,7 @@ export default createGlobalStyle`
   }
 
   body {
-    background-color: #2D3047;
+    background-color: #171717;
     font-family: sans-serif;
   }
 

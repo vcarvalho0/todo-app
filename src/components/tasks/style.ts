@@ -5,11 +5,12 @@ import { HiOutlineTrash } from "react-icons/hi";
 
 export const Container = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: row;
 `;
 
 export const Check = styled(GoChecklist)`
-  color: #000000;
+  color: #fefefe;
   margin-right: 10px;
   font-size: 25px;
   float: right;
@@ -20,7 +21,7 @@ export const Check = styled(GoChecklist)`
 `;
 
 export const Trash = styled(HiOutlineTrash)`
-  color: #000000;
+  color: #fefefe;
   font-size: 25px;
   float: right;
   cursor: pointer;
@@ -32,7 +33,8 @@ export const Trash = styled(HiOutlineTrash)`
 export const Task = styled.span`
   width: 380px;
   font-size: 20px;
-  margin-bottom: 20px;
+  margin: 10px 0 10px 0%;
   padding: 0 15px 0 15px;
   word-wrap: normal;
+  color: #fefefe;
 `;
